@@ -97,11 +97,11 @@ xlabel('t [s]')
 ylabel('M [Nm]')
 % Utskrift i command window
 
-psys=Fk/Aok
-FMcS=psys*AmcS
-FMcL=psys*AmcL
-xmcs=(2*Aok*x2)/AmcS
-xmcL=(2*Aok*x2)/AmcL
+psys=Fk/Aok;
+FMcS=psys*AmcS;
+FMcL=psys*AmcL;
+xmcs=(2*Aok*x2)/AmcS;
+xmcL=(2*Aok*x2)/AmcL;
 
 
 disp(['Stopptid:     ' num2str(t) ' s'])
@@ -110,6 +110,40 @@ disp(['Bromsmoment:  ' num2str(Mb) ' Nm'])
 disp(['Klämkraft:    ' num2str(Fk) ' N per sida'])
 
 
-%% EOF
+%% Positionering
+d=610*10^-3; % Avstånd mellan lagern[m]
+Ff=Fk*Mub; % Friktionskraft
+Rx= @(alfa) Ff*cosd(alfa); Ry= @(alfa) Ff*sind(alfa);
+alfavec=linspace(0,2*pi,1000);
+dvec=linspace(0.1,d/2,1000);
+
+
+FLvvec=zeros(1,1000);FLhvec=zeros(1,1000);
+
+%for i=1:1000
+i=1; % Variation av rotationsvinkeln har ingen inverkan på lagerkrafter
+alfa=alfavec(i);
+for ii=1:1000
+
+
+Sv=dvec(ii); % Avstånd mellan bromsskiva och vänstra lagret
+Sh=d-Sv; 
+FLvx=(Sh/d)*Rx(alfa); FLvy=(Sh/d)*Ry(alfa); 
+FLhx=(Sv/d)*Rx(alfa); FLhy=(Sv/d)*Ry(alfa);
+
+FLvvec(ii)=sqrt(FLvx^2+FLvy^2);  FLhvec(ii)=sqrt(FLhx^2+FLhy^2);
+end
+
+[FLv,ind1]=min(FLvvec); [FLh,ind2]=min(FLhvec); 
+
+FLvec=FLhvec+FLvvec; [FL,ind]=min(FLvec);
+
+disp(['Lagerkraft:   ' num2str(FLvvec(ind)) ' N på vänsterlager'])
+disp(['Lagerkraft:   ' num2str(FLhvec(ind)) ' N på högerlager'])
+
+
+
+
+
 
 
