@@ -4,7 +4,7 @@
 % Anders Söderberg, KTH - Maskinkonstruktion, 2018-08-31
 
 %% Städar
-clear all; clc; close all
+clear all; close all
 
 %% Systemparametrar
 % Definera systemparametar som globala
