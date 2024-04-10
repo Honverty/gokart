@@ -12,7 +12,7 @@ global r L1 L2 H1 H2 m g f c rho A mu
 
 % Data för gokart
 m   = 120;         % Massa gokart inkl. förare [kg]
-r   = 0.135;       % Hjulradie [m]
+r   = 0.2794/2;       % Hjulradie [m]
 L1  = 0.658;       % Masscentrum relativt framaxel [m]
 L2  = 0.600;       % Masscentrum relativit bakaxel [m]
 H1  = 0.40;        % Masscentrum relativit marknivå [m]
@@ -22,13 +22,14 @@ x2=0.5*10^-3;
 
 
 % Data för bromsok/-cylinder
-rb = 90 *10^-3;     % Mittradien för bromsbelägget på skivan [m]
+rb = 91.43 *10^-3;     % Mittradien för bromsbelägget på skivan [m]
 dKok= 25.4 * 10^-3; % Diameter för kolv i bromsok [m] 
 dKmcL=9/8*25.40*10^-3;    % Diameter för kolv i Mastercylinder[m]
 dKmcS=5/8*25.4*10^-3;
 Aok=(pi*dKok^2)/4;    % Kolvarea i ok [m^2]
 AmcS=(pi*dKmcS^2)/4;    % Kolvarea i Mastercylinder [m^2]
 AmcL=(pi*dKmcL^2)/4;
+alfa= 16;               %Vinkel bromsok
 
 % Fysikaliska parametrar
 mu  = 0.8;         % Friktionstal mellan däck och vägbana [-]
@@ -108,42 +109,67 @@ disp(['Stopptid:     ' num2str(t) ' s'])
 disp(['Stoppsträcka: ' num2str(s) ' m'])
 disp(['Bromsmoment:  ' num2str(Mb) ' Nm'])
 disp(['Klämkraft:    ' num2str(Fk) ' N per sida'])
+disp(['Bromstryck:   ' num2str(psys) 'Pa' ])
 
+%% Kraftanalys bakaxel
+bhl=108.1*10^-3;
+blb=38.7*10^-3;
+bld=10*10^-3;
+b=879*10^-3;
+
+Nb=max(N2); Ffr=-min(F);
+H1z = Nb/2;
+H2z = Nb/2;
+H1y = -Ffr/2;
+H2y= -Ffr/2;
+H1x=0;
+H2x=0;
+Bz=(r/rb)*sind(alfa)*Ffr;
+By=-(r/rb)*cosd(alfa)*Ffr;
+Dy=0; 
+Mh1y=r*(-H1x);
+Mh2y=r*(-H2x);
+
+L1x=-(H2x+H1x);
+L2z=(Mh1y+bhl*H1z-blb*Bz-(b-bhl)*H2z+Mh2y)/(b-2*bhl);
+L1z=-H1z-Bz-L2z-H2z;
+L2y=(bhl*H1y-blb*By-(b-2*bhl-bld)*Dy-(b-bhl)*H2y)/(b-2*bhl);
+L1y=-H1y-By-Dy-L2y-H2y;
 
 %% Positionering
-d=610*10^-3; % Avstånd mellan lagern[m]
-Ff=Fk*Mub; % Friktionskraft
-Rx= @(alfa) Ff*cosd(alfa); Ry= @(alfa) Ff*sind(alfa);
-alfavec=linspace(0,2*pi,1000);
-dvec=linspace(0.1,d/2,1000);
-
-
-FLvvec=zeros(1,1000);FLhvec=zeros(1,1000);
-
-%for i=1:1000
-i=1; % Variation av rotationsvinkeln har ingen inverkan på lagerkrafter
-alfa=alfavec(i);
-for ii=1:1000
-
-
-Sv=dvec(ii); % Avstånd mellan bromsskiva och vänstra lagret
-Sh=d-Sv; 
-FLvx=(Sh/d)*Rx(alfa); FLvy=(Sh/d)*Ry(alfa); 
-FLhx=(Sv/d)*Rx(alfa); FLhy=(Sv/d)*Ry(alfa);
-
-FLvvec(ii)=sqrt(FLvx^2+FLvy^2);  FLhvec(ii)=sqrt(FLhx^2+FLhy^2);
-end
-
-[FLv,ind1]=min(FLvvec); [FLh,ind2]=min(FLhvec); 
-
-FLvec=FLhvec+FLvvec; [FL,ind]=min(FLvec);
-
-disp(['Lagerkraft:   ' num2str(FLvvec(ind)) ' N på vänsterlager'])
-disp(['Lagerkraft:   ' num2str(FLhvec(ind)) ' N på högerlager'])
-
-
-
-
+% d=610*10^-3; % Avstånd mellan lagern[m]
+% Ff=Fk*Mub; % Friktionskraft
+% Rx= @(alfa) Ff*cosd(alfa); Ry= @(alfa) Ff*sind(alfa);
+% alfavec=linspace(0,2*pi,1000);
+% dvec=linspace(0.1,d/2,1000);
+% 
+% 
+% FLvvec=zeros(1,1000);FLhvec=zeros(1,1000);
+% 
+% for i=1:1000
+% i=1; % Variation av rotationsvinkeln har ingen inverkan på lagerkrafter
+% alfa=alfavec(i);
+% for ii=1:1000
+% 
+% 
+% Sv=dvec(ii); % Avstånd mellan bromsskiva och vänstra lagret
+% Sh=d-Sv; 
+% FLvx=(Sh/d)*Rx(alfa); FLvy=(Sh/d)*Ry(alfa); 
+% FLhx=(Sv/d)*Rx(alfa); FLhy=(Sv/d)*Ry(alfa);
+% 
+% FLvvec(ii)=sqrt(FLvx^2+FLvy^2);  FLhvec(ii)=sqrt(FLhx^2+FLhy^2);
+% end
+% 
+% [FLv,ind1]=min(FLvvec); [FLh,ind2]=min(FLhvec); 
+% 
+% FLvec=FLhvec+FLvvec; [FL,ind]=min(FLvec);
+% 
+% disp(['Lagerkraft:   ' num2str(FLvvec(ind)) ' N på vänsterlager'])
+% disp(['Lagerkraft:   ' num2str(FLhvec(ind)) ' N på högerlager'])
+% 
+% 
+% 
+% 
 
 
 
