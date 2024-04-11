@@ -111,10 +111,10 @@ disp(['Bromsmoment:  ' num2str(Mb) ' Nm'])
 disp(['Klämkraft:    ' num2str(Fk) ' N per sida'])
 disp(['Bromstryck:   ' num2str(psys) 'Pa' ])
 
-%% Kraftanalys bakaxel
+%% Kraftanalys bakaxel bromsning
 bhl=108.1*10^-3;
 blb=38.7*10^-3;
-bld=10*10^-3;
+bld=202.38*10^-3;
 b=879*10^-3;
 
 Nb=max(N2); Ffr=-min(F);
@@ -135,6 +135,12 @@ L2z=(Mh1y+bhl*H1z-blb*Bz-(b-bhl)*H2z+Mh2y)/(b-2*bhl);
 L1z=-H1z-Bz-L2z-H2z;
 L2y=(bhl*H1y-blb*By-(b-2*bhl-bld)*Dy-(b-bhl)*H2y)/(b-2*bhl);
 L1y=-H1y-By-Dy-L2y-H2y;
+
+disp(['Lager kraft 1x: ' num2str(L1x) ' N'])
+disp(['Lager kraft 1y: ' num2str(L1y) ' N'])
+disp(['Lager kraft 1z: ' num2str(L1z) ' N'])
+disp(['Lager kraft 2y: ' num2str(L2y) ' N'])
+disp(['Lager kraft 2z: ' num2str(L2z) ' N'])
 
 %% Positionering
 % d=610*10^-3; % Avstånd mellan lagern[m]
