@@ -1,0 +1,17 @@
+﻿Report Name: C:\Users\emil\OneDrive\Skrivbord\Github\gokart\bromsar\Egna cadar Isak\report.txt
+Report Time: 2024-04-11 11:39:30
+Report Options:
+    Part Names
+
+Select Set #1:
+    M10mutter.par:2
+
+Select Set #2:
+    Screw ISO 4762 M10x50.par:2
+
+Interferences:
+    1 of 1
+    M10mutter.par:2
+    Screw ISO 4762 M10x50.par:2
+
+    1 Interferences Detected
