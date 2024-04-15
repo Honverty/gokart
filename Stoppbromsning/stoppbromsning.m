@@ -136,11 +136,75 @@ L1z=-H1z-Bz-L2z-H2z;
 L2y=(bhl*H1y-blb*By-(b-2*bhl-bld)*Dy-(b-bhl)*H2y)/(b-2*bhl);
 L1y=-H1y-By-Dy-L2y-H2y;
 
-disp(['Lager kraft 1x: ' num2str(L1x) ' N'])
-disp(['Lager kraft 1y: ' num2str(L1y) ' N'])
-disp(['Lager kraft 1z: ' num2str(L1z) ' N'])
-disp(['Lager kraft 2y: ' num2str(L2y) ' N'])
-disp(['Lager kraft 2z: ' num2str(L2z) ' N'])
+L1R=sqrt(L1y^2+L1z^2); L2R=sqrt(L2y^2+L2z^2);
+L1A=L1x;
+Bromsvec=[L1A,L1R,L2R];
+% 
+% disp(['Lager kraft 1x: ' num2str(L1x) ' N'])
+% disp(['Lager kraft 1y: ' num2str(L1y) ' N'])
+% disp(['Lager kraft 1z: ' num2str(L1z) ' N'])
+% disp(['Lager kraft 2y: ' num2str(L2y) ' N'])
+% disp(['Lager kraft 2z: ' num2str(L2z) ' N'])
+%% Kraftanlys bakaxel svängning höger
+bhl=108.1*10^-3;
+blb=38.7*10^-3;
+bld=202.38*10^-3;
+b=879*10^-3;
+Ky=0.11; Ki=0.89;
+
+Nb=max(N2); Ffr=-min(F);
+H1z = Nb*Ki;
+H2z = Nb*Ky;
+H1y = 0;
+H2y= 0;
+H1x=mu*H1z;
+H2x=mu*H2z;
+Bz=0;
+By=0;
+Dy=0; 
+Mh1y=r*(-H1x);
+Mh2y=r*(-H2x);
+
+L1x=-(H2x+H1x);
+L2z=(Mh1y+bhl*H1z-blb*Bz-(b-bhl)*H2z+Mh2y)/(b-2*bhl);
+L1z=-H1z-Bz-L2z-H2z;
+L2y=(bhl*H1y-blb*By-(b-2*bhl-bld)*Dy-(b-bhl)*H2y)/(b-2*bhl);
+L1y=-H1y-By-Dy-L2y-H2y;
+
+L1R=sqrt(L1y^2+L1z^2); L2R=sqrt(L2y^2+L2z^2);
+L1A=L1x;
+hsvangvec=[L1A,L1R,L2R];
+%% Kraftanlys bakaxel svängning vänster
+bhl=108.1*10^-3;
+blb=38.7*10^-3;
+bld=202.38*10^-3;
+b=879*10^-3;
+
+Nb=max(N2); Ffr=-min(F);
+H1z = Nb*Ky;
+H2z = Nb*Ki;
+H1y = 0;
+H2y= 0;
+H1x=-mu*H1z;
+H2x=-mu*H2z;
+Bz=0;
+By=0;
+Dy=0; 
+Mh1y=r*(-H1x);
+Mh2y=r*(-H2x);
+
+L1x=-(H2x+H1x);
+L2z=(Mh1y+bhl*H1z-blb*Bz-(b-bhl)*H2z+Mh2y)/(b-2*bhl);
+L1z=-H1z-Bz-L2z-H2z;
+L2y=(bhl*H1y-blb*By-(b-2*bhl-bld)*Dy-(b-bhl)*H2y)/(b-2*bhl);
+L1y=-H1y-By-Dy-L2y-H2y;
+
+L1R=sqrt(L1y^2+L1z^2); L2R=sqrt(L2y^2+L2z^2);
+L1A=L1x;
+vsvangvec=[L1A,L1R,L2R];
+
+%% Konstant hastightet
+
 
 %% Positionering
 % d=610*10^-3; % Avstånd mellan lagern[m]
