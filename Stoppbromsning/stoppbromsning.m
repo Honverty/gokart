@@ -240,6 +240,201 @@ vsvangvec=[L1A,L1R,L2R];
 % 
 % 
 % 
+%% Isaks test på bakaxelberäkningar (Måste ha kört "simulering av stoppbromsning" eftersom vi behöver bromskraften F.)
+%Val av Y-lager:
+%YAT 206 (sid 458 i SKF)
+f_0 = 14; %Taget från tabell 8 sid 445 i SKF
+C_0 = 11.2 * 10^3; %[N]
+C = 19.5 * 10^3; %[N]
+
+p = 3; %För beräkning av nominell livslängd
+
+%Parametrar som inte beror på lastfall
+bHL = 108.1*10^-3; %[m] Sträcka från hjul till lager
+bLB = 38.7*10^-3; %[m] Sträcka från lager till bromsok
+bLD = 202.38*10^-3; %[m] Sträcka från lager till drev
+b = 879*10^-3; %[m] Hela bakaxelns sträcka
+rb = 91.43 *10^-3;%[m] Mittradien för bromsbelägget på skivan [m]
+alfa = 16; %[grader] Vinkel för bromsoket med z-axeln
+
+L10Vektor1 = [];
+L10Vektor2 = [];
+varvtalsVektor = [];
 
 
 
+
+% Inbromsning parametrar
+Dy = 0; %[N] Kraft från draget
+Pb = 0.42; %[1] procent av bilens vikt på bakhjulen
+Pv = 0.5; %[1] procent av bilens vikt på de vänstra hjulen
+Ph = 0.5; %[1] procent av bilens vikt på de högra hjulen
+Fb = -min(F); %[N] Bromsande kraften
+mux = 0; %[1] friktionstal i centrifugalriktningen
+
+[H1z,H2z,H1y,H2y,H1x,H2x,By,Bz,MH1y,MH2y] = bakaxelkrafter(Pb,Pv,Ph,Fb,mux,rb,alfa);
+[L1x,L2z,L1z,L2y,L1y] = lagerkrafter(H1z,H2z,H1y,H2y,H1x,H2x,By,Bz,MH1y,MH2y, Dy, bHL, bLB, bLD, b);
+Fr1 = sqrt(L1z^2+L1y^2);
+Fa1 = abs(L1x);
+Fr2 = sqrt(L2z^2+L2y^2);
+Fa2 = 0;
+
+if (Fa1==0)
+    P1 = Fr1;
+else
+    P1 = ekvivalentDynamiskLagerbelastning(Fr1,Fa1,f_0,C_0);
+end
+
+L101 = nominellLivslangd(C,P1,p);
+P2 = Fr2;
+L102 = nominellLivslangd(C,P2,p);
+
+L10Vektor1 = [L10Vektor1, L101];
+L10Vektor2 = [L10Vektor2, L102];
+varvtalsVektor = [varvtalsVektor, 0.15];
+
+
+
+
+% Vänstersväng parametrar
+Dy = 0; %[N] Kraft från draget
+Pb = 0.52; %[1] procent av bilens vikt på bakhjulen. Taget från systemanalys Resultat-dokumentet
+Pv = 0.11; %[1] procent av bilens vikt på de vänstra hjulen
+Ph = 0.89; %[1] procent av bilens vikt på de högra hjulen
+Fb = 0; %[N] Bromsande kraften
+mux = -mu; %[1] friktionstal i centrifugalriktningen
+
+[H1z,H2z,H1y,H2y,H1x,H2x,By,Bz,MH1y,MH2y] = bakaxelkrafter(Pb,Pv,Ph,Fb,mux,rb,alfa);
+[L1x,L2z,L1z,L2y,L1y] = lagerkrafter(H1z,H2z,H1y,H2y,H1x,H2x,By,Bz,MH1y,MH2y, Dy, bHL, bLB, bLD, b);
+Fr1 = sqrt(L1z^2+L1y^2);
+Fa1 = abs(L1x);
+Fr2 = sqrt(L2z^2+L2y^2);
+Fa2 = 0;
+
+if (Fa1==0)
+    P1 = Fr1;
+else
+    P1 = ekvivalentDynamiskLagerbelastning(Fr1,Fa1,f_0,C_0);
+end
+L101 = nominellLivslangd(C,P1,p);
+P2 = Fr2;
+L102 = nominellLivslangd(C,P2,p);
+
+L10Vektor1 = [L10Vektor1, L101];
+L10Vektor2 = [L10Vektor2, L102];
+varvtalsVektor = [varvtalsVektor, 0.25];
+
+% Högersväng parametrar
+Dy = 0; %[N] Kraft från draget
+Pb = 0.52; %[1] procent av bilens vikt på bakhjulen. Taget från systemanalys Resultat-dokumentet
+Pv = 0.89; %[1] procent av bilens vikt på de vänstra hjulen
+Ph = 0.11; %[1] procent av bilens vikt på de högra hjulen
+Fb = 0; %[N] Bromsande kraften
+mux = mu; %[1] friktionstal i centrifugalriktningen
+
+[H1z,H2z,H1y,H2y,H1x,H2x,By,Bz,MH1y,MH2y] = bakaxelkrafter(Pb,Pv,Ph,Fb,mux,rb,alfa);
+[L1x,L2z,L1z,L2y,L1y] = lagerkrafter(H1z,H2z,H1y,H2y,H1x,H2x,By,Bz,MH1y,MH2y, Dy, bHL, bLB, bLD, b);
+Fr1 = sqrt(L1z^2+L1y^2);
+Fa1 = abs(L1x);
+Fr2 = sqrt(L2z^2+L2y^2);
+Fa2 = 0;
+
+if (Fa1==0)
+    P1 = Fr1;
+else
+    P1 = ekvivalentDynamiskLagerbelastning(Fr1,Fa1,f_0,C_0);
+end
+L101 = nominellLivslangd(C,P1,p);
+P2 = Fr2;
+L102 = nominellLivslangd(C,P2,p);
+
+L10Vektor1 = [L10Vektor1, L101];
+L10Vektor2 = [L10Vektor2, L102];
+varvtalsVektor = [varvtalsVektor, 0.25];
+
+% Acceleration parametrar
+
+
+
+% Konstant hastighet parametrar?
+
+%Beräkning av livslängd med delskadeteori?
+L101tot = livslangdVarierandeLagerbelastning(L10Vektor1, varvtalsVektor)
+L102tot = livslangdVarierandeLagerbelastning(L10Vektor2, varvtalsVektor)
+
+mil = 2*r*pi*min(L101tot,L102tot)*10^6/10000
+%% Funktioner
+function [H1z,H2z,H1y,H2y,H1x,H2x,By,Bz,MH1y,MH2y] = bakaxelkrafter(Pb,Pv,Ph,Fb,mux,rb,alfa)
+global  r m g
+rh = r; %[m] Hjulens radie. r är en global variabel.
+H1z = m*g*Pb*Pv; %[N] Normalkraft(z-riktning) på vänster bakhjul. m och g är globala variabler
+H2z = m*g*Pb*Ph; %[N] Normalkraft(z-riktning) på höger bakhjul. m och g är globala variabler
+H1y = -Fb/2; %[N] Kraft på vänster bakhjul i körriktning(y-riktning). Fb är bromskraften.
+H2y = H1y; %[N] Kraft på vänster bakhjul i körriktning(y-riktning). Fb är bromskraften.
+H1x = mux * H1z; %[N] Kraft på vänster bakhjul i x-led.
+H2x = mux * H2z; %[N] Kraft på höger bakhjul i -led.
+By = rh/rb * -Fb * cosd(alfa); %[N] Kraften från bromsoket i y-led.
+Bz = rh/rb * Fb * sind(alfa); %[N] Kraften från bromsoket i z-led.
+MH1y = rh * -H1x; %[Nm] Momentet på vänster hjul i y-led.
+MH2y = rh * -H2x; %[Nm] Momentet på höger hjul i y-led.
+end
+
+function [L1x,L2z,L1z,L2y,L1y] = lagerkrafter(H1z,H2z,H1y,H2y,H1x,H2x,By,Bz,MH1y,MH2y, Dy, bHL, bLB, bLD, b)
+global  r m g
+L1x = -(H1x+H2x); %[N] Det styrande(vänster) lagrets kraft i x-riktning.
+L2z = (MH1y+bHL*H1z-bLB*Bz-(b-bHL)*H2z+MH2y)/(b-2*bHL);  %[N] Höger lagrets kraft i z-led (upp)
+L1z = -H1z-Bz-L2z-H2z; %[N] Vänster lagrets kraft i z-led (upp)
+L2y = (bHL*H1y-bLB*By-(b-2*bHL-bLD)*Dy-(b-bHL)*H2y)/(b-2*bHL);
+L1y = -H1y-By-Dy-L2y-H2y;
+end
+
+function y = linjarInterpolering(x,x_vektor,y_vektor)
+    i = 1;
+    while x > x_vektor(i) 
+        i = i+1;
+    end
+    x_2 = x_vektor(i);
+    x_1 = x_vektor(i-1);
+    
+    y_2 = y_vektor(i);
+    y_1 = y_vektor(i-1);
+
+    y = y_1 + (y_2-y_1)/(x_2-x_1) * (x-x_1);
+end
+
+function P = ekvivalentDynamiskLagerbelastning(F_r,F_a,f_0,C_0)
+
+    t = f_0 * F_a/C_0
+    t_vektor = [0.172, 0.345, 0.689, 1.03, 1.38, 2.07, 3.45, 5.17, 6.89];
+    
+    %För spårkullager:
+    %e_vektor = [0.19, 0.22, 0.26, 0.28, 0.30, 0.34, 0.38, 0.42, 0.44];
+    %X_vektor = [0.56, 0.56, 0.56, 0.56, 0.56, 0.56, 0.56, 0.56, 0.56]; %samma för alla t!
+    %Y_vektor = [2.30, 1.99, 1.71, 1.55, 1.45, 1.31, 1.15, 1.04, 1.00];
+    
+    %För Y-lager förutom 17262 och 17263:
+    e_vektor = [0.29, 0.32, 0.36, 0.38, 0.4, 0.44, 0.49, 0.54, 0.54];
+    X_vektor = [0.46, 0.46, 0.46, 0.46, 0.46, 0.46, 0.46, 0.46, 0.46]; %samma för alla t!
+    Y_vektor = [1.88, 1.71, 1.52, 1.41, 1.34, 1.23, 1.1, 1.01, 1.00];
+    
+    e = linjarInterpolering(t,t_vektor,e_vektor);
+    X = linjarInterpolering(t,t_vektor,X_vektor);
+    Y = linjarInterpolering(t,t_vektor,Y_vektor);
+    
+    if (F_a/F_r <= e)
+        P = F_r;
+    else
+        P = X*F_r + Y*F_a;
+    end
+end
+
+function L10 = nominellLivslangd(C,P,p)
+    % p = 3 för kullager och p = 10/3 för rullager
+    L10 = (C/P)^p
+end
+
+function L10 = livslangdVarierandeLagerbelastning(L10Vektor, varvtalsVektor)
+    %Tagen från sid 81 i SKF-katalogen.
+    N = sum(varvtalsVektor);
+    L10 = 1/(sum(varvtalsVektor/N ./L10Vektor));
+end
