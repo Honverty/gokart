@@ -1,0 +1,12 @@
+m=0.185;                        % Massa bromsblock [kg]
+mu=0.3;                        % Friktionskoefficient block-trumma [-]
+r=0.0331;                      % Tyngddpunktsavstånd bromsblock [m]
+R=0.055;                       % Trumradie [m]
+M=5.5;
+o1=2*pi*1600/60;
+o2=2*pi*2400/60;
+k=(o2/o1)^2;
+Ffjb=90;
+Ffj=38;
+c=14;
+mm=(Ffjb-Ffj)/c
