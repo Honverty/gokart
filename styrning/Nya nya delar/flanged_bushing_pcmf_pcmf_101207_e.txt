@@ -1,0 +1,10 @@
+﻿"Symbol";"Value";"Unit";
+"TraceParts.PartNumber";"33-18072018-059671";"";
+"REFERENCE";"PCMF 101207 E";"";
+"TraceParts.PartTitle";"Flanged bushing PCMF, Bore Ø 10 mm, Outside Ø 12 mm";"";
+"TraceParts.InstanceId";"33-18072018-0596713SZ3IEFGKOW1XCJEHELSP0M7B";"";
+"SUPPLIER";"SKF";"";
+"DESIGN";"Flanged bushing PCMF, Bore Ø 10 mm, Outside Ø 12 mm";"";
+"TraceParts.PartVersion";"1.3.3";"";
+"TraceParts.PartLanguage";"en";"";
+"MASS";"0.003";"";
