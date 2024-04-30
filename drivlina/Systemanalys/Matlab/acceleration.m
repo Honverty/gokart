@@ -29,20 +29,20 @@ rho = 1.22;                 % Denstitet hos luft [kg/m^3]
 
 % Masströghetsmoment i systemet:
 JM  = 0.02;                 % Tröghetsmoment för motorn [kg*m^2]
-JK1 = 0.003;                % Tröghetsmoment för medbringar med block [kg*m^2]
-JK2 = 0.005;                % Tröghetsmoment för trumma [kg*m^2]
+JK1 = 0.001;                % Tröghetsmoment för medbringar med block [kg*m^2]
+JK2 = 0.001;                % Tröghetsmoment för trumma [kg*m^2]
 JV1 = 0;                    % Tröghetsmoment för växel drev [kg*m^2]
-JV2 = 0;                    % Tröghetsmoment för växel hjul [kg*m^2]
-JA  = 0.070;                % Tröghetsmoment för bakaxel [kg*m^2]
-JB  = 0;                    % Tröghetsmoment för bromsskiva [kg*m^2]
-JH  = 0;                    % Tröghetsmoment per hjul [kg*m^2]
+JV2 = 0.006;                % Tröghetsmoment för växel hjul [kg*m^2]
+JA  = 0.001;                % Tröghetsmoment för bakaxel [kg*m^2]
+JB  = 0.006;                % Tröghetsmoment för bromsskiva [kg*m^2]
+JH  = 0.025;                % Tröghetsmoment per hjul [kg*m^2]
 JL  = JA+JB+4*JH+m*r^2;     % Tröghetsmoment för lasten [kg*m^2]
 
 % Data för motorn
 n0   =  1400;               % Tomgångsvarvtal [rpm]
 
 % Data för växeln
-u   =    2.9;               % Utväxling [-]
+u   =    2.875;               % Utväxling [-]
 eta =    0.95;              % Verkningsgrad i växel [-]
 
 %% Plot av momentkurvor
