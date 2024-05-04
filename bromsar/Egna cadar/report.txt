@@ -1,17 +1,17 @@
 ﻿Report Name: C:\Users\emil\OneDrive\Skrivbord\Github\gokart\bromsar\Egna cadar\report.txt
-Report Time: 2024-04-09 14:00:20
+Report Time: 2024-05-02 14:17:06
 Report Options:
     Part Names
 
 Select Set #1:
-    skiva.par:1
+    kil4x40.par:1
 
 Select Set #2:
-    kil4x40.par:1
+    skiva.par:1
 
 Interferences:
     1 of 1
-    skiva.par:1
     kil4x40.par:1
+    skiva.par:1
 
     1 Interferences Detected
