@@ -22,7 +22,7 @@ x2=0.5*10^-3;
 
 
 % Data för bromsok/-cylinder
-rb = 91.43 *10^-3;     % Mittradien för bromsbelägget på skivan [m]
+rb = 85.34 *10^-3;     % Mittradien för bromsbelägget på skivan [m]
 dKok= 25.4 * 10^-3; % Diameter för kolv i bromsok [m] 
 dKmcL=9/8*25.40*10^-3;    % Diameter för kolv i Mastercylinder[m]
 dKmcS=5/8*25.4*10^-3;
